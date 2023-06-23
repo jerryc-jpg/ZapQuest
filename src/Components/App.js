@@ -20,7 +20,7 @@ const App = ()=> {
   }, [auth]);
   return (
     <div>
-      <h1>Acme Shopping</h1>
+      <h1>ZapQuest</h1>
       {
         auth.id ? <Home /> : <Login />
       }
