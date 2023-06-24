@@ -13,12 +13,14 @@ const proxyOptions = {
 };
 
 // Create the proxy middleware
-const proxy = createProxyMiddleware(proxyOptions);
+const proxy = createProxyMiddleware('/api', { target: 'https://developer.nrel.gov'});
 
 // Use the proxy for requests starting with '/api'
 app.use('/api', proxy);
 
+
+const port = 4000
 // Start the server
-app.listen(3035, () => {
-  console.log('Proxy server is running on port 3035');
+app.listen(port, () => {
+  console.log(`Proxy server is running on port ${port}`);
 });
