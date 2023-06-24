@@ -12,22 +12,40 @@ const center = {
   lng: -87.6298
 };
 
+function calcDistance(lat1, lng1, lat2, lng2) {
+  const R = 3958.8;
+  const dLat = toRadians(lat2 - lat1);
+  const dLng = toRadians(lng2 - lng2);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+}
+
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
 const Map = (props) => {
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const radius = props.radius || 20;
   const API_ENDPOINT = 'https://developer.nrel.gov/api/alt-fuel-stations/v1.geojson?api_key=SAXrq0f3rADebnnt4f9QIoAto2FAygasfxSySLne&fuel_type=ELEC&state=IL&limit=200&access_code=public&access_detail_code=RESIDENTIAL';
 
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get((API_ENDPOINT), {
-          params: {
-            ev_connector_type: 'TESLA', // Example filter parameter for TESLA
-            // Add more filter parameters as needed
-          }
+        const response = await axios.get(API_ENDPOINT);
+        const filteredMarkers = response.data.features.filter((marker) => {
+          const markerLat = marker.geometry.coordinates[1];
+          const markerLng = marker.geometry.coordinates[0];
+          const distance = calcDistance(center.lat, center.lng, markerLat, markerLng);
+          return distance <= radius;
         });
-        setMarkers(response.data.features);
+        setMarkers(filteredMarkers);
       } catch (error) {
         console.log(error);
       }
