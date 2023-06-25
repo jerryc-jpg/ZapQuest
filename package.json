@@ -23,6 +23,7 @@
     "http-proxy-middleware": "^2.0.6",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.8.0",
+    "react-select": "^5.7.3",
     "sequelize": "^6.25.3"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-
+import MapFilter from './MapFilter';
 
 const containerStyle = {
   height: '100%'
@@ -31,7 +31,7 @@ function toRadians(degrees) {
 const Map = (props) => {
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const radius = props.radius || 20;
+  const radius = props.radius || 6;
   const API_ENDPOINT = 'https://developer.nrel.gov/api/alt-fuel-stations/v1.geojson?api_key=SAXrq0f3rADebnnt4f9QIoAto2FAygasfxSySLne&fuel_type=ELEC&state=IL&limit=200&access_code=public&access_detail_code=RESIDENTIAL';
 
   
@@ -63,7 +63,11 @@ const Map = (props) => {
   };
 
   return (
-    <LoadScript
+    <div>
+      <div id='FilterBox'>
+        <MapFilter />
+      </div>
+      <LoadScript
       googleMapsApiKey="AIzaSyAFcX5Uw-P48huUIPGzpUV6v-NHhq1C3Zs"
     >
       <GoogleMap
@@ -99,6 +103,8 @@ const Map = (props) => {
         )}
       </GoogleMap>
     </LoadScript>
+    </div>
+    
   );
 };
 
