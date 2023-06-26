@@ -20,6 +20,10 @@ const Navbar = () => {
     setIsRegisterMode(!isRegisterMode);
   };
 
+  const clickLogin = () => {
+    setIsRegisterMode(false);
+  };
+
   const onChange = (ev) => {
     setCredentials({ ...credentials, [ev.target.name]: ev.target.value });
     setLoginError(null);
@@ -44,7 +48,7 @@ const Navbar = () => {
       })
       .catch((error) => {
         setLoginError(
-          error.message || "An error occurred during login. Please try again."
+          error.message || "Invalid Username or Password. Please try again."
         );
       });
   };
@@ -53,7 +57,9 @@ const Navbar = () => {
     ev.preventDefault();
     dispatch(signup(credentials))
       .unwrap()
-      .then(() => dispatch(attemptLogin(credentials)))
+      .then(() => {
+        return dispatch(attemptLogin(credentials));
+      })
       .then(() => {
         const modal = document.getElementById("loginModal");
         if (modal) {
@@ -67,9 +73,10 @@ const Navbar = () => {
         }
       })
       .catch((error) => {
-        console.log("Registration error:", error); 
+        console.log("Registration error:", error);
         setRegisterError(
-          error.message || "An error occurred during registration. Please try again."
+          error.message ||
+            "An error occurred during registration. Please try again."
         );
       });
   };
@@ -80,7 +87,9 @@ const Navbar = () => {
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <i className="fa-solid fa-charging-station"></i>
-          <span className="ml-2">ZapQuest</span>
+          <span className="ml-2" style={{ fontFamily: "Chantal", fontWeight: 'bold', fontSize: '1.25rem' }}>
+            ZapQuest
+          </span>
         </Link>
         {auth.username ? (
           <>
@@ -104,6 +113,7 @@ const Navbar = () => {
             className="btn btn-dark"
             data-toggle="modal"
             data-target="#loginModal"
+            onClick={clickLogin}
           >
             Login
           </button>
@@ -181,6 +191,8 @@ const Navbar = () => {
                     Login
                   </button>
                 )}
+                {isRegisterMode && registerError && <div>{registerError}</div>}
+                {!isRegisterMode && loginError && <div>{loginError}</div>}
               </form>
               {isRegisterMode ? (
                 <p>
@@ -205,8 +217,6 @@ const Navbar = () => {
                   </button>
                 </p>
               )}
-              {isRegisterMode && registerError && <div>{registerError}</div>}
-              {!isRegisterMode && loginError && <div>{loginError}</div>}
             </div>
           </div>
         </div>
