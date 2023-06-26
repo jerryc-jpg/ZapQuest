@@ -21,28 +21,38 @@ const Login = () => {
     navigate('/');
   };
 
-
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={login}>
-        <input
-          placeholder='username'
-          value={credentials.username}
-          name='username'
-          onChange={onChange}
-        />
-        <input
-          placeholder='password'
-          name='password'
-          value={credentials.password}
-          onChange={onChange}
-        />
-        <button>Login</button>
-      </form>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="mb-3">Login</h2>
+          <form onSubmit={login}>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Username"
+                name="username"
+                value={credentials.username}
+                onChange={onChange}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                name="password"
+                value={credentials.password}
+                onChange={onChange}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Login;
-
