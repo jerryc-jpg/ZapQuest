@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Home from './Home';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import Map from './Map';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, fetchCart } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
@@ -21,6 +22,7 @@ const App = ()=> {
   return (
     <div>
       <Navbar />
+      <Link to="map"/>
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
