@@ -21,3 +21,24 @@ app.get('/', async(req, res, next)=> {
     next(ex);
   }
 });
+
+app.post('/signup', async(req, res, next)=> {
+  try {
+    res.send(await User.create(req.body));
+  }
+  catch(ex){
+    next(ex);
+  }
+}
+);
+
+app.put('/update', async(req, res, next)=> {
+  try {
+    res.send(await User.update(req.body));
+  }
+  catch(ex){
+    next(ex);
+  }
+}
+);
+

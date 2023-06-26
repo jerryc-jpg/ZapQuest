@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Home from './Home';
-import Login from './Login';
 import Cart from './Cart';
 import Navbar from './Navbar';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +24,6 @@ const App = ()=> {
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/map" element={<Map />} />
         
         </Routes>
