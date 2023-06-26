@@ -33,6 +33,23 @@ export const attemptLogin = createAsyncThunk("attemptLogin", async (cred, { reje
   }
 });
 
+export const signup = createAsyncThunk("signup", async (cred, { rejectWithValue }) => {
+  try {
+    let response = await axios.post('/api/auth/signup', cred);  
+    window.localStorage.setItem('token', response.data);
+    response = await axios.get('/api/auth', {
+      headers: {
+        authorization: response.data
+      }
+    });
+    return response.data;
+  }
+  catch(ex){
+    return rejectWithValue(ex.response.data);
+  }
+});
+
+
 const authSlice = createSlice({
   name:"auth",
   initialState,
@@ -49,6 +66,10 @@ const authSlice = createSlice({
     builder.addCase(attemptLogin.fulfilled, (state, action)=>{
       return action.payload;
     })
+    builder.addCase(signup.fulfilled, (state, action)=>{
+      return action.payload;
+    }
+    )
   }
 });
 const { logout } = authSlice.actions;

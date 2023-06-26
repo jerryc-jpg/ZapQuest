@@ -25,6 +25,15 @@ const User = conn.define('user', {
     validate: {
       notEmpty: true
     }
+  },
+  email: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isEmail: true
+    },
+    unique: true
   }
 });
 

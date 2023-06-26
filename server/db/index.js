@@ -12,13 +12,13 @@ LineItem.belongsTo(Product);
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
   const [moe, lucy, larry, foo, bar, bazz, ethyl] = await Promise.all([
-    User.create({ username: 'moe', password: '123' }),
-    User.create({ username: 'lucy', password: '123' }),
-    User.create({ username: 'larry', password: '123' }),
+    User.create({ username: 'moe', password: '123', email: 'moe@test.com' }),
+    User.create({ username: 'lucy', password: '123', email: 'lucy@test.com' }),
+    User.create({ username: 'larry', password: '123', email: 'larry@test.com' }),
     Product.create({ name: 'foo' }),
     Product.create({ name: 'bar' }),
     Product.create({ name: 'bazz' }),
-    User.create({ username: 'ethyl', password: '123' }),
+    User.create({ username: 'ethyl', password: '123', email: 'ethyl@test.com' }),
   ]);
 
   const cart = await ethyl.getCart();
